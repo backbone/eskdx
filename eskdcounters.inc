@@ -24,8 +24,20 @@ Counter subsection
 	Within               section
 End
 
-Counter point
+Counter subsubsection
 	Within               subsection
+End
+
+Counter paragraph
+	Within               subsubsection
+End
+
+Counter subparagraph
+	Within               paragraph
+End
+
+Counter point
+	Within               subparagraph
 End
 
 Counter subpoint
