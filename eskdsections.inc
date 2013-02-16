@@ -68,10 +68,10 @@ Style "Раздел"
 	NeedProtect           1
 	NextNoIndent          1
 	LabelSep              xxx
-	ParSkip               0.4
-	TopSep                1.3
-	BottomSep             0.7
-	ParSep                0.7
+        #ParSkip               0.4
+        #TopSep                1.3
+        #BottomSep             0.7
+        #ParSep                0.7
 	Align                 Block
 	AlignPossible         Block, Left
 	OptionalArgs          1
@@ -81,29 +81,120 @@ Style "Раздел"
 	EndFont
 End
 
-
 Style "Подраздел"
 	CopyStyle             "Раздел"
 	LabelCounter	      subsection
-	TocLevel              2
-	LatexName             ESKDsubsection
-	TopSep                0.9
-	BottomSep             0.5
-	ParSep                0.5
-	Font
-	  Series              Bold
-	  Size                Large
-	EndFont
+	LatexName             subsection
+        #TocLevel              2
+        #TopSep                0.9
+        #BottomSep             0.5
+        #ParSep                0.5
+        Font
+          Series              Bold
+          Size                Large
+        EndFont
 	
-	Preamble
-		\newcommand{\ESKDsubsection}[1]{
-			\subsection{#1}
-			\setcounter{point}{\value{subsection}}
-			\setcounter{subpoint}{0}
-		} 
-	EndPreamble
+        #	Preamble
+        #	\newcommand{\ESKDsubsection}[1]{
+          #		\subsection{#1}
+          #		\setcounter{subsubsection}{0}
+          #		\setcounter{paragraph}{0}
+          #		\setcounter{subparagraph}{0}
+          #		\setcounter{point}{0}
+          #		\setcounter{subpoint}{0}
+          #	} 
+          #EndPreamble
 
 End
+
+Style "Подподраздел"
+	CopyStyle             "Подраздел"
+	LabelCounter	      subsubsection
+	LatexName             subsubsection
+        #TocLevel              3
+        #TopSep                0.9
+        #BottomSep             0.5
+        #ParSep                0.5
+        Font
+          Series              Bold
+          Size                Normal
+        EndFont
+	
+        #Preamble
+        #	\newcommand{\ESKDsubsubsection}[1]{
+          #		\subsubsection{#1}
+          #		\setcounter{paragraph}{0}
+          #		\setcounter{subparagraph}{0}
+          #		\setcounter{point}{0}
+          #		\setcounter{subpoint}{0}
+          #	} 
+          #EndPreamble
+
+End
+
+Style "Абзац"
+	CopyStyle             "Подподраздел"
+	LabelCounter	      paragraph
+	LatexName             paragraph
+        #TocLevel              3
+        #TopSep                0.9
+        #BottomSep             0.5
+        #ParSep                0.5
+        Font
+          Series              Medium
+          Size                Normal
+        EndFont
+	
+        #Preamble
+        #	\newcommand{\ESKDparagraph}[1]{
+          #		\paragraph{#1}
+          #		\setcounter{subparagraph}{0}
+          #		\setcounter{point}{0}
+          #		\setcounter{subpoint}{0}
+          #	} 
+          #EndPreamble
+
+	Preamble
+		% paragraph title one 1st line
+		\makeatletter
+		\renewcommand\paragraph{%
+		   \@startsection{paragraph}{4}{0mm}%
+		      {-\baselineskip}%
+		      {.5\baselineskip}%
+		      {\normalfont\normalsize\bfseries}}
+		\makeatother
+		\makeatletter
+		\renewcommand\paragraph{%
+		   \@startsection{paragraph}{4}{15mm}%
+		      {-\baselineskip}%
+		      {.5\baselineskip}%
+		      {\normalfont\normalsize\bfseries}}
+		\makeatother
+	EndPreamble
+End
+
+#Style "Подабзац"
+#	CopyStyle             "Абзац"
+#	LabelCounter	      subparagraph
+#	LatexName             subparagraph
+#        #TocLevel              3
+#        #TopSep                0.9
+#        #BottomSep             0.5
+#        #ParSep                0.5
+#        #Font
+#        #  Series              Bold
+#        #  Size                Large
+#        #EndFont
+#	
+#        #Preamble
+#        #	\newcommand{\ESKDsubparagraph}[1]{
+  #          #		\subparagraph{#1}
+  #          #		\setcounter{point}{0}
+  #          #		\setcounter{subpoint}{0}
+  #          #	} 
+  #          #EndPreamble
+  #
+  #End
 
 # Поскольку в ЕСКД могут быть документы как с подразделами, так и без подразделов
 # считаю логичным ввести 2 типа пунктов/подпунктов:
@@ -121,76 +212,76 @@ End
 # Так же необходимо выделять заголовки для SubSection и не выбелять для point и subpoint,
 # но выводить нумерацию.
 
-Style "Пункт1"
-	Category              "С подразделами"
-	Margin                Dynamic
-	LabelType             Counter
-	LabelCounter          point
-	KeepEmpty             1
-	TocLevel              3
-	LatexType             Command
-	LatexName             subpoint
-#	LatexParam            1
-	NeedProtect           0
-	NextNoIndent          0
-	LabelSep              xxx
-	ParSkip               0.4
-	TopSep                0.4
-	BottomSep             0
-End
-
-
-Style "Подпункт1"
-	Category              "С подразделами"
-	Margin                Dynamic
-	LabelType             Counter
-	LabelCounter          subpoint
-	KeepEmpty             1
-	TocLevel              3
-	LatexType             Command
-	LatexName             subsubpoint
-#	LatexParam            1
-	NeedProtect           0
-	NextNoIndent          0
-	LabelSep              xxx
-	ParSkip               0.4
-	TopSep                0.4
-	BottomSep             0
-End
-
-Style "Пункт2"
-	Category              "Без подразделов"
-	Margin                Dynamic
-	LabelType             Counter
-	LabelCounter          subsection
-	KeepEmpty             1
-	TocLevel              3
-	LatexType             Command
-	LatexName             point
-	NeedProtect           0
-	NextNoIndent          0
-	LabelSep              xxx
-	ParSkip               0.4
-	TopSep                0.4
-	BottomSep             0
-End
-
-Style "Подпункт2"
-	Category              "Без подразделов"
-	Margin                Dynamic
-	LabelType             Counter
-	LabelCounter          point
-	KeepEmpty             1
-	TocLevel              3
-	LatexType             Command
-	LatexName             subpoint
-	NeedProtect           0
-	NextNoIndent          0
-	LabelSep              xxx
-	ParSkip               0.4
-	TopSep                0.4
-	BottomSep             0
-End
+#Style "Пункт1"
+#	Category              "С подразделами"
+#	Margin                Dynamic
+#	LabelType             Counter
+#	LabelCounter          point
+#	KeepEmpty             1
+#	TocLevel              3
+#	LatexType             Command
+#	LatexName             subpoint
+##	LatexParam            1
+#	NeedProtect           0
+#	NextNoIndent          0
+#	LabelSep              xxx
+#	ParSkip               0.4
+#	TopSep                0.4
+#	BottomSep             0
+#End
+#
+#
+#Style "Подпункт1"
+#	Category              "С подразделами"
+#	Margin                Dynamic
+#	LabelType             Counter
+#	LabelCounter          subpoint
+#	KeepEmpty             1
+#	TocLevel              3
+#	LatexType             Command
+#	LatexName             subsubpoint
+##	LatexParam            1
+#	NeedProtect           0
+#	NextNoIndent          0
+#	LabelSep              xxx
+#	ParSkip               0.4
+#	TopSep                0.4
+#	BottomSep             0
+#End
+#
+#Style "Пункт2"
+#	Category              "Без подразделов"
+#	Margin                Dynamic
+#	LabelType             Counter
+#	LabelCounter          subsection
+#	KeepEmpty             1
+#	TocLevel              3
+#	LatexType             Command
+#	LatexName             point
+#	NeedProtect           0
+#	NextNoIndent          0
+#	LabelSep              xxx
+#	ParSkip               0.4
+#	TopSep                0.4
+#	BottomSep             0
+#End
+#
+#Style "Подпункт2"
+#	Category              "Без подразделов"
+#	Margin                Dynamic
+#	LabelType             Counter
+#	LabelCounter          point
+#	KeepEmpty             1
+#	TocLevel              3
+#	LatexType             Command
+#	LatexName             subpoint
+#	NeedProtect           0
+#	NextNoIndent          0
+#	LabelSep              xxx
+#	ParSkip               0.4
+#	TopSep                0.4
+#	BottomSep             0
+#End
 
 # Поскольку команда ESKDappendix содержит 2 параметра, а передать в команду через Lyx
 # мы можем только один документ, то необходимо применить одну старую рыбацкую хитрость,
