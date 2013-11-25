@@ -43,6 +43,10 @@ Style Enumerate
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Enumerate
+
+	Preamble
+		\renewcommand{\labelenumi}{\arabic{enumi})}
+	EndPreamble
 End
 
 
